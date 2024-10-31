@@ -10,7 +10,7 @@ fig = px.scatter_3d(
     z="weigth",
     animation_frame="year",
     color="origin",
-    #size="cylinders",
+    size="cylinders",
     hover_name="model",
     title="3D Car Data Animation",
     range_x=[0, df["MPG"].max() + 10],
@@ -21,3 +21,10 @@ fig = px.scatter_3d(
 fig.show()
 
 fig.write_html("car_data_3D_animation.html")
+
+
+# TODO
+# change years 70 -> 1970
+# change representation of cylinders
+# add background of all data
+# buttons to select origin/cylinders
