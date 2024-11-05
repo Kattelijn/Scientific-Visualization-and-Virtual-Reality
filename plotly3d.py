@@ -17,7 +17,6 @@ fig = px.scatter_3d(
     color="origin",
     size="cylinders",
     hover_name="model",
-    #title="3D Car Data Animation",
     range_x=[0, df["MPG"].max() + 10],
     range_y=[0, df["horsepower"].max() + 50],
     range_z=[0, df["weigth"].max() + 500]
