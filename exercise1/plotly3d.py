@@ -13,6 +13,7 @@ fig = px.scatter_3d(
     x="MPG",
     y="horsepower",
     z="weigth",
+    title="Evolution of Car Design",
     animation_frame="year",
     color="origin",
     size="cylinders",
