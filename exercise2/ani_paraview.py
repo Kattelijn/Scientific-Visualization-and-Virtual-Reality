@@ -35,6 +35,9 @@ def diffuse(grid):
 
 # Save a grid as a .vti file
 def save_to_vti(grid, simulation, timestep):
+
+    grid = np.flipud(grid.T)
+
     # Create a VTK image data object
     image_data = vtk.vtkImageData()
     image_data.SetDimensions(grid_size, grid_size, 1)
