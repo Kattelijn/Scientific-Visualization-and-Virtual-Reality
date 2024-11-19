@@ -9,7 +9,7 @@ simulation = "simulation_1"
 
 os.makedirs(simulation, exist_ok=True)
 
-temperature_grid = np.zeros((grid_size, grid_size))
+temperature_grid = np.full((grid_size, grid_size), 90.0)
 
 temperature_grid[0, :] = 100
 temperature_grid[grid_size - 1, :] = 32
@@ -36,7 +36,7 @@ def diffuse(grid):
 # Save a grid as a .vti file
 def save_to_vti(grid, simulation, timestep):
 
-    grid = np.flipud(grid.T)
+    adjusted_grid = np.flipud(grid.T)
 
     # Create a VTK image data object
     image_data = vtk.vtkImageData()
@@ -46,7 +46,7 @@ def save_to_vti(grid, simulation, timestep):
     # Populate the image data with the temperature grid
     for i in range(grid_size):
         for j in range(grid_size):
-            image_data.SetScalarComponentFromFloat(i, j, 0, 0, grid[i, j])
+            image_data.SetScalarComponentFromFloat(i, j, 0, 0, adjusted_grid[i, j])
 
     # Define the file name inside the folder
     file_name = os.path.join(simulation, f"temperature_timestep_{timestep:03d}.vti")
