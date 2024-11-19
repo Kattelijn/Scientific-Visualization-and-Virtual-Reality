@@ -2,9 +2,9 @@ import numpy as np
 import vtk
 import os
 
-grid_size = 20
+grid_size = 200
 inch = (grid_size - 2) // 9
-time_steps = 100
+time_steps = 1000
 simulation = "simulation_1"
 
 os.makedirs(simulation, exist_ok=True)
@@ -59,5 +59,6 @@ def save_to_vti(grid, simulation, timestep):
 
 # Perform diffusion and save results
 for t in range(time_steps):
+    print("timestep: ", t)
     save_to_vti(temperature_grid, simulation, t)
     temperature_grid = diffuse(temperature_grid)
