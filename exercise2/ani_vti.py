@@ -36,11 +36,7 @@ def diffuse(grid):
 # Save a grid as a .vti file
 def save_to_vti(grid, simulation, timestep):
 
-    print(grid)
-
     adjusted_grid = np.flipud(grid).T
-
-    print(adjusted_grid)
 
     # Create a VTK image data object
     image_data = vtk.vtkImageData()
@@ -53,8 +49,6 @@ def save_to_vti(grid, simulation, timestep):
         for j in range(grid_size):
             image_data.SetScalarComponentFromFloat(i, j, 0, 0, adjusted_grid[i, j])
     
-    print(image_data)
-
     # Define the file name inside the folder
     file_name = os.path.join(simulation, f"temperature_timestep_{timestep:03d}.vti")
     
