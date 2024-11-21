@@ -6,7 +6,7 @@ grid_size = 20
 inch = (grid_size - 2) // 9
 tolerance = 0.5
 max_iterations = 100
-simulation = "simulation_test2"
+simulation = "simulation_20x20"
 
 os.makedirs(simulation, exist_ok=True)
 
