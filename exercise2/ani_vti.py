@@ -13,12 +13,12 @@ os.makedirs(simulation, exist_ok=True)
 temperature_grid = np.full((grid_size, grid_size), 90.0)
 
 temperature_grid[0, :] = 100
-temperature_grid[grid_size - 1, :] = 32
-gradient = np.linspace(100, 32, num=(5 * inch) + 2)
-temperature_grid[1:(5 * inch) + 1, 0] = gradient[1:-1]
-temperature_grid[(5 * inch)+2:grid_size - 1, 0] = 32
-temperature_grid[1:(5 * inch) + 1, grid_size - 1] = gradient[1:-1]
-temperature_grid[(5 * inch)+2:grid_size - 1, grid_size - 1] = 32
+temperature_grid[grid_size-1, :] = 32
+gradient = np.linspace(100, 32, num=(5 * inch)+2)
+temperature_grid[1:(5*inch)+1, 0] = gradient[1:-1]
+temperature_grid[(5*inch)+1:grid_size-1, 0] = 32
+temperature_grid[1:(5*inch)+1, grid_size-1] = gradient[1:-1]
+temperature_grid[(5*inch)+1:grid_size-1, grid_size-1] = 32
 
 for i in range((3 * inch) + 1, (6 * inch) + 1):
     for j in range((3 * inch) + 1, (6 * inch) + 1):
