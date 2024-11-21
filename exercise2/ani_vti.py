@@ -4,8 +4,9 @@ import os
 
 grid_size = 20
 inch = (grid_size - 2) // 9
-time_steps = 100
-simulation = "simulation"
+tolerance = 0.5
+max_iterations = 100
+simulation = "simulation_test2"
 
 os.makedirs(simulation, exist_ok=True)
 
@@ -15,9 +16,9 @@ temperature_grid[0, :] = 100
 temperature_grid[grid_size - 1, :] = 32
 gradient = np.linspace(100, 32, num=(5 * inch) + 2)
 temperature_grid[1:(5 * inch) + 1, 0] = gradient[1:-1]
-temperature_grid[(5 * inch):grid_size - 1, 0] = 32
+temperature_grid[(5 * inch)+2:grid_size - 1, 0] = 32
 temperature_grid[1:(5 * inch) + 1, grid_size - 1] = gradient[1:-1]
-temperature_grid[(5 * inch):grid_size - 1, grid_size - 1] = 32
+temperature_grid[(5 * inch)+2:grid_size - 1, grid_size - 1] = 32
 
 for i in range((3 * inch) + 1, (6 * inch) + 1):
     for j in range((3 * inch) + 1, (6 * inch) + 1):
@@ -25,13 +26,22 @@ for i in range((3 * inch) + 1, (6 * inch) + 1):
 
 # Function to update grid based on diffusion
 def diffuse(grid):
+
     new_grid = grid.copy()
+    max_change = 0
+
     for i in range(1, grid_size - 1):
-        for j in range(1, grid_size - 1):
+        for j in range(1, (grid_size//2)):
             if (i in range((3 * inch) + 1, (6 * inch) + 1)) and (j in range((3 * inch) + 1, (6 * inch) + 1)):
                 continue
             new_grid[i, j] = (grid[i + 1, j] + grid[i - 1, j] + grid[i, j + 1] + grid[i, j - 1]) / 4
-    return new_grid
+            change = abs(new_grid[i, j] - grid[i, j])
+            if change > max_change:
+                max_change = change
+    
+    new_grid[1:grid_size-1, (grid_size//2):grid_size-1] = np.fliplr(new_grid[1:grid_size-1, 1:(grid_size//2)])
+
+    return new_grid, max_change
 
 # Save a grid as a .vti file
 def save_to_vti(grid, simulation, timestep):
@@ -59,7 +69,13 @@ def save_to_vti(grid, simulation, timestep):
     writer.Write()
 
 # Perform diffusion and save results
-for t in range(time_steps):
+t = 0
+max_change = 1000
+
+while max_change > tolerance:
     print("timestep: ", t)
     save_to_vti(temperature_grid, simulation, t)
-    temperature_grid = diffuse(temperature_grid)
+    temperature_grid, max_change = diffuse(temperature_grid)
+    t += 1
+    if t > max_iterations:
+        break
