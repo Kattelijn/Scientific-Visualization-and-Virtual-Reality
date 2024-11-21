@@ -69,13 +69,13 @@ def save_to_vti(grid, simulation, timestep):
     writer.Write()
 
 # Perform diffusion and save results
-t = 0
+iteration = 0
 max_change = 1000
 
 while max_change > tolerance:
-    print("timestep: ", t)
-    save_to_vti(temperature_grid, simulation, t)
+    print("timestep: ", iteration)
+    save_to_vti(temperature_grid, simulation, iteration)
     temperature_grid, max_change = diffuse(temperature_grid)
-    t += 1
-    if t > max_iterations:
+    iteration += 1
+    if iteration > max_iterations:
         break
